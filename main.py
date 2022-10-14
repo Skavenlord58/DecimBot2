@@ -1,4 +1,3 @@
-# bot.py
 import json
 from ntpath import join
 import os
