@@ -369,7 +369,7 @@ async def on_message(m: Message):
     if m.content[0] == PREFIX:
         # nutnost aby jely commandy    
         await client.process_commands(m)
-    elif not m.author.bot:
+    elif not str(m.author) != "DecimBOT 2.0#8467":
         if "negr" in m.content.lower():
             await m.add_reaction("🇳")
             # await m.add_reaction("🇪")
@@ -403,7 +403,7 @@ async def on_message(m: Message):
         if "drž hubu" in m.content.lower() and "996439005405126787" in m.mentions.values():
             print(m.mentions)
             await m.reply("Ne, ty. 😃")
-        if "primos" in m.content.lower():
+        if "free primos" in m.content.lower() or "príma džemy" in m.content.lower():
             await m.reply(
                 "Neklikejte na odkazy s názvem FREE PRIMOS. Obvykle toto bývá phishing scam. https://www.avast.com/cs-cz/c-phishing")
         if "jsem" in m.content.lower():
