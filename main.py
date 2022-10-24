@@ -369,7 +369,7 @@ async def on_message(m: Message):
     if m.content[0] == PREFIX:
         # nutnost aby jely commandy    
         await client.process_commands(m)
-    elif not str(m.author) != "DecimBOT 2.0#8467":
+    elif str(m.author) != "DecimBOT 2.0#8467":
         if "negr" in m.content.lower():
             await m.add_reaction("🇳")
             # await m.add_reaction("🇪")
