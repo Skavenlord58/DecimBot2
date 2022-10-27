@@ -50,8 +50,6 @@ HELP = '''
         Use underscores as spaces. Bot will automatically edit them for you.
     $_today_
         Tells you which international day it is today.
-    $_joestar_
-        Joseph Joestar will tell which your next line will be.
     '''
 
 WARCRAFTY_CZ = '''
@@ -334,24 +332,6 @@ async def today(ctx: Context):
 
 
 @client.command()
-async def joestar(ctx: Context):
-    async with aiohttp.ClientSession() as session:
-        content: str = ctx.message.content.replace('$joestar ', '')
-        print(f'ctx.message.content: {content}')
-        async with session.post('https://api.textsynth.com/v1/engines/gptj_6B/completions', data=json.dumps({
-            'prompt': content,
-            'max_tokens': 50,
-        }), headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {TEXT_SYNTH_TOKEN}",
-        }) as response:
-            payload = await response.json()
-            predicted: str = payload.get("text", "")
-            print(f'payload: {payload}')
-            await ctx.reply(f'Your next line is: {predicted}')
-    pass
-
-@client.command()
 async def xkcd(ctx: Context, *args):
     if args:
         x = requests.get('https://xkcd.com/' + args[0] + '/info.0.json')
@@ -387,13 +367,15 @@ async def on_message(m: Message):
             await m.add_reaction("💦")
         if "všechno nejlepší" in m.content.lower():
             await m.add_reaction("🥳")
-            await m.add_reaction("🎉") 
+            await m.add_reaction("🎉")
+        if "co jsem to stvořil" in m.content.lower() and m.author == 'SkavenLord58#0420':
+            await m.reply("https://media.tenor.com/QRTVgLglL6AAAAAd/thanos-avengers.gif")
         if "atpro" in m.content.lower():
             await m.add_reaction("😥")
             await m.reply("To mě mrzí.")
         if "in a nutshell" in m.content.lower():
             await m.add_reaction("🌰")
-        if "hilfe" in m.content.lower() or "pomoc" in m.content.lower():
+        if "hilfe" in m.content.lower() or "pomoc" in m.content.lower() and "pomocí" not in m.content.lower():
             await m.reply(f'''
             „{MOT_HLASKY[random.randint(0, len(MOT_HLASKY) - 1)]}“
                                                                                 - Mistr Oogway, {random.randint(470,480)} př. n. l.
