@@ -329,9 +329,6 @@ async def gmod(ctx: Context, *args):
 
     pass
 
-@bot.slash_command(name="first_slash", guild_ids=[...]) #Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, but note that it will take some time (up to an hour) to register the command if it's for all guilds.
-async def first_slash(ctx): 
-    await ctx.respond("You executed the slash command!")
 @client.command()
 async def today(ctx: Context):
     async with aiohttp.ClientSession() as session:
