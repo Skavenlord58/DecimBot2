@@ -4,15 +4,15 @@ import os
 from typing import List
 
 import aiohttp
-import discord
+import disnake
 import random
 import asyncio
 import datetime as dt
 
-from discord import Message
-from discord.ext.commands import Context
+from disnake import Message
+# from disnake.ext.commands import Context
 from dotenv import load_dotenv
-from discord.ext import commands
+from disnake.ext import commands
 
 import requests
 
@@ -21,8 +21,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 TEXT_SYNTH_TOKEN = os.getenv('TEXT_SYNTH_TOKEN')
 PREFIX = os.getenv('BOT_PREFIX')
 
-client = commands.Bot(command_prefix=PREFIX)
-
+intents = disnake.Intents.all()
+client = disnake.ext.commands.Bot(command_prefix=PREFIX, intents=intents)
 
 @client.event
 async def on_ready():
@@ -51,7 +51,6 @@ HELP = '''
     $_today_
         Tells you which international day it is today.
     '''
-
 WARCRAFTY_CZ = '''
     <@&871817685439234108> - Warcrafty 3 dnes{0}?
     React with attendance:
@@ -188,19 +187,19 @@ There really is a Linux, and these people are using it, but it is just a part of
 '''
 # debug commands
 @client.command()
-async def helloworld(ctx: Context):
+async def helloworld(ctx):
     await ctx.reply('Ahoj, krutý světe!')
 
 
 @client.command()
-async def reactcheck(ctx: Context):
+async def reactcheck(ctx):
     await ctx.message.add_reaction("👍")
 
 
 # legit commandy
 
 @client.command()
-async def bothelp(ctx: Context):
+async def bothelp(ctx):
     m = await ctx.send(HELP)
     await asyncio.sleep(10)
     # automoderation   
@@ -209,7 +208,7 @@ async def bothelp(ctx: Context):
 
 
 @client.command()
-async def commands(ctx: Context):
+async def commands(ctx):
     m = await ctx.send(HELP)
     await asyncio.sleep(10)
     # automoderation
@@ -218,7 +217,7 @@ async def commands(ctx: Context):
 
 
 @client.command()
-async def say(ctx: Context, *args):
+async def say(ctx, *args):
     if str(ctx.message.author) == 'SkavenLord58#0420':
         await ctx.message.delete()
         await ctx.send(f'{" ".join(args)}')
@@ -228,7 +227,7 @@ async def say(ctx: Context, *args):
 
 
 @client.command()
-async def poll(ctx: Context, *args):
+async def poll(ctx, *args):
     poll_mess = f"Anketa: {args[0]}\n".replace("_", " ")
     m = await ctx.send("Creating poll... (If stuck, something failed horribly.)")
     try:
@@ -248,7 +247,7 @@ async def poll(ctx: Context, *args):
 
 
 @client.command()
-async def roll(ctx: Context, arg_range=None):
+async def roll(ctx, arg_range=None):
     range = None
     try:
         range = int(arg_range)
@@ -264,12 +263,34 @@ async def roll(ctx: Context, arg_range=None):
     else:
         await ctx.reply(f'Something\'s wrong. Check your syntax.')
 
-@client.command(name = "slashtest", description = "Slash command test")
-async def slashtest(ctx: Context):
-    await ctx.reply("Slash commands are working! 👍")
+@client.slash_command(name = "slashtest", description = "Slash command test", guild_ids=[276720867344646144])
+async def slashtest(ctx):
+    await ctx.response.send_message(content="Slash commands are working! 👍", ephemeral=False)
+
+@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", guild_ids=[276720867344646144])
+async def tweet(ctx, content: str, media: str = "null"):
+    twitterpero = client.get_channel(1042052161338626128)
+    embed = disnake.Embed(
+        title=f"{ctx.author.display_name} tweeted:",
+        description=f"{content}",
+        color=disnake.Colour.dark_purple()
+    )
+    if media != "null":
+        embed.set_image(url=media)
+    embed.add_field(name=f"_", value=f"Sent from #{ctx.channel.name}", inline=True)
+    # if ctx.author.mobile_status:
+    #    embed.add_field(name=f"Sent from a mobile device 📱", value="_", inline=True)
+    await ctx.response.send_message(content="Tweet posted! 👍", ephemeral=True)
+    m = await twitterpero.send(embed=embed)
+    await m.add_reaction("💜")
+    await m.add_reaction("🔁")
+    await m.add_reaction("⬇️")
+    await m.add_reaction("💭")
+    await m.add_reaction("🔗")
+    
 
 @client.command()
-async def ping(ctx: Context):
+async def ping(ctx):
     m = await ctx.send(f'Ping?')
     ping = int(str(m.created_at - ctx.message.created_at).split(".")[1]) / 1000
     await m.edit(content=f'Pong! Latency is {ping}ms. API Latency is {round(client.latency * 1000)}ms.')
@@ -277,14 +298,14 @@ async def ping(ctx: Context):
 
 
 @client.command()
-async def yesorno(ctx: Context, *args):
+async def yesorno(ctx, *args):
     answers = ("Yes.", "No.", "Perhaps.", "Definitely yes.", "Definitely no.")
     await ctx.reply(f'{answers[random.randint(0, len(answers) - 1)]}')
     pass
 
 
 @client.command()
-async def warcraft(ctx: Context, *args):
+async def warcraft(ctx, *args):
     # automoderation
     await ctx.message.delete()
     # send z templaty
@@ -308,7 +329,7 @@ async def warcraft(ctx: Context, *args):
 
 
 @client.command()
-async def gmod(ctx: Context, *args):
+async def gmod(ctx, *args):
     # automoderation
     await ctx.message.delete()
     # send z templaty
@@ -330,7 +351,7 @@ async def gmod(ctx: Context, *args):
     pass
 
 @client.command()
-async def today(ctx: Context):
+async def today(ctx):
     async with aiohttp.ClientSession() as session:
         async with session.get('https://national-api-day.herokuapp.com/api/today') as response:
             payload = await response.json()
@@ -339,12 +360,12 @@ async def today(ctx: Context):
     pass
 
 @client.command()
-async def autostat(ctx: Context):
+async def autostat(ctx):
     m = ctx.message
     await m.reply("OK;")
 
 @client.command()
-async def xkcd(ctx: Context, *args):
+async def xkcd(ctx, *args):
     if args:
         x = requests.get('https://xkcd.com/' + args[0] + '/info.0.json')
         if x.status_code == 200:
@@ -358,7 +379,9 @@ async def xkcd(ctx: Context, *args):
 
 @client.event
 async def on_message(m: Message):
-    if m.content[0] == PREFIX:
+    if not m.content:
+        pass
+    elif m.content[0] == PREFIX:
         # nutnost aby jely commandy    
         await client.process_commands(m)
     elif str(m.author) != "DecimBOT 2.0#8467":
