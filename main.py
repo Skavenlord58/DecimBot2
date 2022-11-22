@@ -213,7 +213,8 @@ async def on_message(m: Message):
             # await m.add_reaction("🇬")
             # await m.add_reaction("🇷")
         if "linux" in m.content.lower() and not "gnu/linux" in m.content.lower():
-            await m.reply(LINUX_COPYPASTA)
+            if random.randint(0, 64) == 4:
+                await m.reply(LINUX_COPYPASTA)
         if "based" in m.content:
             await m.add_reaction("👌")
         if  m.content.lower().startswith("hodný bot") or "good bot" in m.content.lower():
@@ -261,5 +262,7 @@ async def on_message(m: Message):
             await m.reply(f'haha žongli :clown:')
         if "aneurysm" in m.content.lower():
             await m.reply(f'https://www.youtube.com/watch?v=kyg1uxOsAUY')
+        if "decim je negr" in m.content.lower():
+            await m.send("nn, ty seš")
 
 client.run(TOKEN)
