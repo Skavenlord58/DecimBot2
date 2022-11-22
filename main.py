@@ -263,6 +263,6 @@ async def on_message(m: Message):
         if "aneurysm" in m.content.lower():
             await m.reply(f'https://www.youtube.com/watch?v=kyg1uxOsAUY')
         if "decim je negr" in m.content.lower():
-            await m.send("nn, ty seš")
+            await m.channel.send("nn, ty seš")
 
 client.run(TOKEN)
