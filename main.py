@@ -181,12 +181,81 @@ async def today(ctx):
 
 @client.command()
 async def fetchrole(ctx):
-    roles = await client.guild.fetch_roles()
+    roles = await ctx.guild.fetch_roles()
     await ctx.send(roles)
 
 @client.slash_command(name = "createrolewindow", description = "Posts a role picker window.", guild_ids=decdi.GIDS)
 @commands.default_member_permissions(administrator=True)
-async def command(inter: disnake.ApplicationCommandInteraction):
+async def command(ctx):
+    
+    embed = disnake.Embed (
+        title="Role picker",
+        description="Here you can pick your roles:",
+        color=disnake.Colour.light_gray(),)
+    embed.add_field(name="Zde jsou role na přístup do různých 'pér'.", value="_")
+    
+
+    gamingembed = disnake.Embed (
+        title="Gaming Roles",
+        description="Here you can pick your gaming tag roles:",
+        color=disnake.Colour.dark_purple())
+    gamingembed.add_field(name="Zde jsou role na získání tagovacích rolí na hry.", value="_")
+    
+    await ctx.response.send_message(content="Done!", ephemeral=True)
+
+
+    await ctx.channel.send(
+        embed=embed,
+        components=[
+            disnake.ui.Button(label="Člen", style=disnake.ButtonStyle.grey, custom_id="Člen", row=0),
+            disnake.ui.Button(label="Pražák", style=disnake.ButtonStyle.green, custom_id="Pražák", row=1),
+            disnake.ui.Button(label="Ostravák", style=disnake.ButtonStyle.green, custom_id="Ostravák", row=1),
+            disnake.ui.Button(label="Carfag-péro", style=disnake.ButtonStyle.grey, custom_id="carfag", row=1),
+        ]
+    )
+    await ctx.channel.send(
+        embed=gamingembed,
+        components=[
+            disnake.ui.Button(label="Warcraft 3", style=disnake.ButtonStyle.blurple, custom_id="warcraft"),
+            disnake.ui.Button(label="Garry's Mod", style=disnake.ButtonStyle.blurple, custom_id="gmod"),
+            disnake.ui.Button(label="Valorant", style=disnake.ButtonStyle.blurple, custom_id="valo"),
+            disnake.ui.Button(label="LoL", style=disnake.ButtonStyle.blurple, custom_id="lolko"),
+            disnake.ui.Button(label="Dota 2", style=disnake.ButtonStyle.blurple, custom_id="dota2"),
+            disnake.ui.Button(label="CS:GO", style=disnake.ButtonStyle.blurple, custom_id="csgo"),
+            disnake.ui.Button(label="Sea of Thieves", style=disnake.ButtonStyle.blurple, custom_id="sea of thieves"),
+            disnake.ui.Button(label="Kyoudai", style=disnake.ButtonStyle.blurple, custom_id="kyoudai"),
+            disnake.ui.Button(label="Minecraft", style=disnake.ButtonStyle.blurple, custom_id="minecraft"),
+            disnake.ui.Button(label="Dark and Darker", style=disnake.ButtonStyle.blurple, custom_id="dark and darker"),
+            disnake.ui.Button(label="Rainbow Six Siege", style=disnake.ButtonStyle.blurple, custom_id="duhová šestka"),
+        ])
+
+class Role:
+  def __init__(self, id: int = 0):
+    self.id = 0
+
+@client.listen("on_button_click")
+async def listener(ctx: disnake.MessageInteraction):
+    role = Role()
+    role_list = {
+        "Člen": 804431648959627294,
+        "warcraft": 871817685439234108,
+        "gmod" : 951457356221394975,
+        "valorant" : 991026818054225931,
+        "lolko" : 994302892561399889,
+        "dota2" : 994303445735587991,
+        "csgo" : 994303566082740224,
+        "sea of thieves": 994303863643451442,
+        "duhová šestka": 1011212649704460378,
+        "minecraft": 1049052005341069382,
+        "dark and darker" : 1054111346733617222,
+        "Ostravák": 988431391807131690,
+        "Pražák" : 998636130511630386,
+        "carfag" : 1057281159509319800,
+    }
+    
+    role.id = role_list[ctx.component.custom_id]
+    await ctx.author.add_roles(role)
+    await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` added!", ephemeral=True)
     pass
 
 @client.command()
