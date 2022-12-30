@@ -180,6 +180,16 @@ async def today(ctx):
     pass
 
 @client.command()
+async def fetchrole(ctx):
+    roles = await client.guild.fetch_roles()
+    await ctx.send(roles)
+
+@client.slash_command(name = "createrolewindow", description = "Posts a role picker window.", guild_ids=decdi.GIDS)
+@commands.default_member_permissions(administrator=True)
+async def command(inter: disnake.ApplicationCommandInteraction):
+    pass
+
+@client.command()
 async def autostat(ctx):
     m = ctx.message
     await m.reply("OK;")
