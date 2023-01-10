@@ -252,10 +252,61 @@ async def listener(ctx: disnake.MessageInteraction):
         "Pražák" : 998636130511630386,
         "carfag" : 1057281159509319800,
     }
-    
-    role.id = role_list[ctx.component.custom_id]
-    await ctx.author.add_roles(role)
-    await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` added!", ephemeral=True)
+    if ctx.component.custom_id in role_list.keys():
+        role.id = role_list[ctx.component.custom_id]
+        await ctx.author.add_roles(role)
+        await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` added!", ephemeral=True)
+    else:
+        pass
+
+@client.command()
+async def cat(ctx, *args):
+    try:
+        if args.__len__() >= 2:
+            w = args[0]
+            h = args[1]
+        else:
+            w = random.randint(64,640)
+            h = random.randint(64,640)
+        apiCall = requests.get(f"https://placekitten.com/{w}/{h}")
+        if apiCall.status_code == 200:
+            await ctx.send(f"https://placekitten.com/{w}/{h}")
+        else:
+            await ctx.send("Oh nyo?!?! Something went ^w^ wwong?!!")
+        pass
+    except Exception as exc:
+        print(f"Encountered exception:\n {exc}")
+        await ctx.send("Oh nyo?!?! Something went ^w^ wwong?!!")
+
+@client.command()
+async def fox(ctx):
+    try:
+        apiCall = requests.get("https://randomfox.ca/floof/")
+        if apiCall.status_code == 200:
+            await ctx.send(apiCall.json()["image"])
+        else:
+            await ctx.send("Server connection error :( No fox image for you.")
+    except Exception as exc:
+        print(f"Caught exception:\n {exc}")
+    pass
+
+@client.command()
+async def waifu(ctx, *args):
+    try:
+        if args and args[0] in ["sfw", "nsfw"]:
+            if args[1]:
+                apiCall = requests.get(f"https://api.waifu.pics/{args[0]}/{args[1]}")
+            else:
+                apiCall = requests.get(f"https://api.waifu.pics/{args[0]}/neko")
+        else:
+            apiCall = requests.get(f"https://api.waifu.pics/sfw/neko")
+        
+        if apiCall.status_code == 200:
+            await ctx.send(apiCall.json()["url"])
+        else:
+            await ctx.send("Server connection error :( No waifu image for you.")
+    except Exception as exc:
+        print(f"Caught exception:\n {exc}")
     pass
 
 @client.command()
