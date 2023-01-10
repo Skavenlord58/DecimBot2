@@ -342,9 +342,6 @@ async def on_message(m: Message):
             # await m.add_reaction("🇪")
             # await m.add_reaction("🇬")
             # await m.add_reaction("🇷")
-        if "linux" in m.content.lower() and not "gnu/linux" in m.content.lower():
-            if random.randint(0, 64) == 4:
-                await m.reply(LINUX_COPYPASTA)
         if "based" in m.content:
             await m.add_reaction("👌")
         if  m.content.lower().startswith("hodný bot") or "good bot" in m.content.lower():
@@ -369,29 +366,6 @@ async def on_message(m: Message):
             await m.reply("To mě mrzí.")
         if "in a nutshell" in m.content.lower():
             await m.add_reaction("🌰")
-        if "hilfe" in m.content.lower() or "pomoc" in m.content.lower() and "pomocí" not in m.content.lower():
-            await m.reply(f'''
-            „{MOT_HLASKY[random.randint(0, len(MOT_HLASKY) - 1)]}“
-                                                                                - Mistr Oogway, {random.randint(470,480)} př. n. l.
-            ''')
-        if "novinky.cz" in m.content.lower():
-            await m.reply("Přestaň postovat cringe, bro.")
-        if "drž hubu" in m.content.lower() and "996439005405126787" in m.mentions.values():
-            print(m.mentions)
-            await m.reply("Ne, ty. 😃")
-        if "free primos" in m.content.lower() or "príma džemy" in m.content.lower():
-            await m.reply(
-                "Neklikejte na odkazy s názvem FREE PRIMOS. Obvykle toto bývá phishing scam. https://www.avast.com/cs-cz/c-phishing")
-        if "jsem" in m.content.lower():
-            if random.randint(0, 32) == 4:
-                kdo = " ".join(m.content.split("jsem")[1].split(" ")[1:])
-                await m.reply(f'Ahoj, {kdo}. Já jsem táta.')
-        if m.content.lower() == "kdo":
-            await m.channel.send(f'kdo se ptal?')
-        if "zhongli" in m.content.lower():
-            await m.reply(f'haha žongli :clown:')
-        if "aneurysm" in m.content.lower():
-            await m.reply(f'https://www.youtube.com/watch?v=kyg1uxOsAUY')
         if "decim je negr" in m.content.lower():
             await m.channel.send("nn, ty seš")
 
