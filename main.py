@@ -25,6 +25,14 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 TEXT_SYNTH_TOKEN = os.getenv('TEXT_SYNTH_TOKEN')
 PREFIX = os.getenv('BOT_PREFIX')
 
+class UnfilteredBot(commands.Bot):
+    """An overridden version of the Bot class that will listen to other bots."""
+
+    async def process_commands(self, message):
+        """Override process_commands to listen to bots."""
+        ctx = await self.get_context(message)
+        await self.invoke(ctx)
+
 # add intents for bot and command prefix for classic command support
 intents = disnake.Intents.all()
 client = disnake.ext.commands.Bot(command_prefix=PREFIX, intents=intents)
@@ -335,7 +343,7 @@ async def on_message(m: Message):
         pass
     elif m.content[0] == PREFIX:
         # nutnost aby jely commandy    
-        await client.process_commands(m)
+        await UnfilteredBot.process_commands(client, m)
     elif str(m.author) != "DecimBOT 2.0#8467":
         if "negr" in m.content.lower():
             await m.add_reaction("🇳")
