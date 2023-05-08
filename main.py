@@ -200,7 +200,7 @@ async def command(ctx):
         title="Role picker",
         description="Here you can pick your roles:",
         color=disnake.Colour.light_gray(),)
-    embed.add_field(name="Zde jsou role na přístup do různých 'pér'.", value="_")
+    embed.add_field(name="Zde jsou role na přístup do různých 'pér'.\nDejte si člena, abyste viděli všude jinde.", value="_")
     
 
     gamingembed = disnake.Embed (
@@ -218,7 +218,8 @@ async def command(ctx):
             disnake.ui.Button(label="Člen", style=disnake.ButtonStyle.grey, custom_id="Člen", row=0),
             disnake.ui.Button(label="Pražák", style=disnake.ButtonStyle.green, custom_id="Pražák", row=1),
             disnake.ui.Button(label="Ostravák", style=disnake.ButtonStyle.green, custom_id="Ostravák", row=1),
-            disnake.ui.Button(label="Carfag-péro", style=disnake.ButtonStyle.grey, custom_id="carfag", row=1),
+            disnake.ui.Button(label="Brňák", style=disnake.ButtonStyle.green, custom_id="brnak", row=1),
+            disnake.ui.Button(label="Carfag-péro", style=disnake.ButtonStyle.grey, custom_id="carfag", row=2),
         ]
     )
     await ctx.channel.send(
@@ -235,6 +236,7 @@ async def command(ctx):
             disnake.ui.Button(label="Minecraft", style=disnake.ButtonStyle.blurple, custom_id="minecraft"),
             disnake.ui.Button(label="Dark and Darker", style=disnake.ButtonStyle.blurple, custom_id="dark and darker"),
             disnake.ui.Button(label="Rainbow Six Siege", style=disnake.ButtonStyle.blurple, custom_id="duhová šestka"),
+            disnake.ui.Button(label="Golf With Your Friends", style=disnake.ButtonStyle.blurple, custom_id="golfisti"),
         ])
 
 class Role:
@@ -259,6 +261,8 @@ async def listener(ctx: disnake.MessageInteraction):
         "Ostravák": 988431391807131690,
         "Pražák" : 998636130511630386,
         "carfag" : 1057281159509319800,
+        "golfisti": 1076931268555587645,
+        "brnak": 1105227159712309391,
     }
     if ctx.component.custom_id in role_list.keys():
         role.id = role_list[ctx.component.custom_id]
