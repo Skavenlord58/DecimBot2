@@ -37,6 +37,26 @@ Chceme hrát:
 :question: - Něco jiného? Napište jako reply.
 '''
 
+WOWKA_CZ = '''
+<@&1120426868697473024> Další raid je naplánován na {0}, od {1}.
+Půjde se:
+{3}
+
+Ready buďte alespoň 15 minut před začátkem.
+
+Dorazíte?
+:white_check_mark: Ano
+:negative_squared_cross_mark: Ne
+:thinking: Možná
+:orthodox_cross: Ano, ale pozdě.
+
+Role?
+:regional_indicator_t: Tank
+:regional_indicator_h: Healer
+:regional_indicator_d: Dps
+:regional_indicator_o: Můžu víc rolí
+'''
+
 GMOD_CZ = '''
 <@&951457356221394975> - Garry's Mod dnes{0}?
     React with attendance:
