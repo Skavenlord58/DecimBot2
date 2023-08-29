@@ -47,6 +47,7 @@ async def on_ready():
 HELP = decdi.HELP
 WARCRAFTY_CZ = decdi.WARCRAFTY_CZ
 GMOD_CZ = decdi.GMOD_CZ
+WOWKA_CZ = decdi.WOWKA_CZ
 MOT_HLASKY = decdi.MOT_HLASKY
 LINUX_COPYPASTA = decdi.LINUX_COPYPASTA
 
@@ -164,6 +165,19 @@ async def warcraft(ctx, *args):
     await batch_react(m, ["✅", "❎", "🤔", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "❓"])
     pass
 
+@client.command()
+async def wowko(ctx, *args):
+    # automoderation
+    await ctx.message.delete()
+    # send z templaty
+    if args:
+        m = await ctx.send(WOWKA_CZ.replace('{0}', f' v cca {args[0]}').replace('{1}', f' v cca {args[1]}').replace('{2}', f' v cca {args[2]}'))
+    else:
+        m = await ctx.send(WOWKA_CZ.replace('{0}', ''))
+    # přidání reakcí
+    await batch_react(m, ["✅", "❎", "🤔", "☦️", "🇹", "🇭", "🇩", "🇴"])
+    pass
+
 
 @client.command()
 async def gmod(ctx, *args):
@@ -226,6 +240,7 @@ async def command(ctx):
         embed=gamingembed,
         components=[
             disnake.ui.Button(label="Warcraft 3", style=disnake.ButtonStyle.blurple, custom_id="warcraft"),
+            disnake.ui.Button(label="Wowko", style=disnake.ButtonStyle.blurple, custom_id="wowko"),
             disnake.ui.Button(label="Garry's Mod", style=disnake.ButtonStyle.blurple, custom_id="gmod"),
             disnake.ui.Button(label="Valorant", style=disnake.ButtonStyle.blurple, custom_id="valo"),
             disnake.ui.Button(label="LoL", style=disnake.ButtonStyle.blurple, custom_id="lolko"),
@@ -263,6 +278,7 @@ async def listener(ctx: disnake.MessageInteraction):
         "carfag" : 1057281159509319800,
         "golfisti": 1076931268555587645,
         "brnak": 1105227159712309391,
+        "wowko": 1120426868697473024,
     }
     if ctx.component.custom_id in role_list.keys():
         role.id = role_list[ctx.component.custom_id]
