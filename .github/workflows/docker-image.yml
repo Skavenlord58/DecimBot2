@@ -23,6 +23,9 @@ jobs:
           
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.ACR_ENDPOINT }}/decimbot2:1.0.${{github.run_number}}
+      
+      - name: Also tag as latest (smh)
+        run: docker tag ${{ secrets.ACR_ENDPOINT }}/decimbot2:1.0.${{github.run_number}} ${{ secrets.ACR_ENDPOINT }}/decimbot2:latest
   
       - name: Publish image to ACR
         run: docker push ${{ secrets.ACR_ENDPOINT }}/decimbot2:1.0.${{github.run_number}}
