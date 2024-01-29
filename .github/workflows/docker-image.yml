@@ -14,16 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag decimbot2:1.0.${{github.run_number}}
-      
       - name: Login to ACR
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_ENDPOINT }}
           username: ${{ secrets.ACR_LOGINNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-
+          
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.ACR_ENDPOINT }}/decimbot2:1.0.${{github.run_number}}
+  
       - name: Publish image to ACR
         run: docker push ${{ secrets.ACR_ENDPOINT }}/decimbot2:1.0.${{github.run_number}}
 
