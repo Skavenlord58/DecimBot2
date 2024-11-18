@@ -117,23 +117,14 @@ async def roll(ctx, arg_range=None):
 
 
 # "twitter" functionality 
-@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", anonym = "if True, hides the autor of the tweet", guild_ids=decdi.GIDS)
-async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
-
+@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", guild_ids=decdi.GIDS)
+async def tweet(ctx, content: str, media: str = "null"):
     twitterpero = client.get_channel(decdi.TWITTERPERO)
-    
-    if anonym:
-        embed = disnake.Embed(
-            title=f"{ctx.author.display_name} tweeted:",
-            description=f"{content}",
-            color=disnake.Colour.dark_purple()
-        )
-    else:
-        embed = disnake.Embed(
-            title=f"{ctx.author.display_name} tweeted:",
-            description=f"{content}",
-            color=disnake.Colour.dark_purple()
-        )
+    embed = disnake.Embed(
+        title=f"{ctx.author.display_name} tweeted:",
+        description=f"{content}",
+        color=disnake.Colour.dark_purple()
+    )
     embed.set_thumbnail(url=ctx.author.avatar)
     if media != "null":
         embed.set_image(url=media)
