@@ -265,7 +265,7 @@ async def command(ctx):
             disnake.ui.Button(label="Warcraft 3", style=disnake.ButtonStyle.blurple, custom_id="warcraft"),
             disnake.ui.Button(label="Wowko", style=disnake.ButtonStyle.blurple, custom_id="wowko"),
             disnake.ui.Button(label="Garry's Mod", style=disnake.ButtonStyle.blurple, custom_id="gmod"),
-            disnake.ui.Button(label="Valorant", style=disnake.ButtonStyle.blurple, custom_id="valo"),
+            disnake.ui.Button(label="Valorant", style=disnake.ButtonStyle.blurple, custom_id="valorant"),
             disnake.ui.Button(label="LoL", style=disnake.ButtonStyle.blurple, custom_id="lolko"),
             disnake.ui.Button(label="Dota 2", style=disnake.ButtonStyle.blurple, custom_id="dota2"),
             disnake.ui.Button(label="CS:GO", style=disnake.ButtonStyle.blurple, custom_id="csgo"),
@@ -275,6 +275,15 @@ async def command(ctx):
             disnake.ui.Button(label="Dark and Darker", style=disnake.ButtonStyle.blurple, custom_id="dark and darker"),
             disnake.ui.Button(label="Rainbow Six Siege", style=disnake.ButtonStyle.blurple, custom_id="duhová šestka"),
             disnake.ui.Button(label="Golf With Your Friends", style=disnake.ButtonStyle.blurple, custom_id="golfisti"),
+            disnake.ui.Button(label="Civilisation V", style=disnake.ButtonStyle.blurple, custom_id="civky"),
+            disnake.ui.Button(label="ROCK AND STONE (Deep rock Gal.)", style=disnake.ButtonStyle.blurple, custom_id="rockandstone"),
+            disnake.ui.Button(label="heroes of the storm", style=disnake.ButtonStyle.blurple, custom_id="hots"),
+            disnake.ui.Button(label="GTA V online", style=disnake.ButtonStyle.blurple, custom_id="gtaonline"),
+            disnake.ui.Button(label="warframe", style=disnake.ButtonStyle.blurple, custom_id="warframe"),
+            disnake.ui.Button(label="helldivers II", style=disnake.ButtonStyle.blurple, custom_id="helldivers"),
+            disnake.ui.Button(label="Void Crew", style=disnake.ButtonStyle.blurple, custom_id="voidboys"),
+            disnake.ui.Button(label="Finálníci (the Finals)", style=disnake.ButtonStyle.blurple, custom_id="thefinals"),
+          
         ])
 
 class Role:
@@ -289,6 +298,7 @@ async def listener(ctx: disnake.MessageInteraction):
         "warcraft": 871817685439234108,
         "gmod" : 951457356221394975,
         "valorant" : 991026818054225931,
+        "kyoudai": 1031510557163008010,
         "lolko" : 994302892561399889,
         "dota2" : 994303445735587991,
         "csgo" : 994303566082740224,
@@ -302,6 +312,14 @@ async def listener(ctx: disnake.MessageInteraction):
         "golfisti": 1076931268555587645,
         "brnak": 1105227159712309391,
         "wowko": 1120426868697473024,
+        "civky": 1070800908729995386,
+        "rockandstone": 1107334623983312897,
+        "hots": 1140376580800118835,
+        "gtaonline": 1189322955063316551,
+        "warframe": 1200135734590451834,
+        "helldivers": 1228002980754751621,
+        "voidboys": 1281326981878906931,
+        "thefinals": 1242187454837035228,
     }
     if ctx.component.custom_id in role_list.keys():
         role.id = role_list[ctx.component.custom_id]
