@@ -117,20 +117,43 @@ async def roll(ctx, arg_range=None):
 
 
 # "twitter" functionality 
-@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", guild_ids=decdi.GIDS)
-async def tweet(ctx, content: str, media: str = "null"):
+@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", anonym = "if True, hides the autor", guild_ids=decdi.GIDS)
+async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
     twitterpero = client.get_channel(decdi.TWITTERPERO)
-    embed = disnake.Embed(
-        title=f"{ctx.author.display_name} tweeted:",
-        description=f"{content}",
-        color=disnake.Colour.dark_purple()
-    )
-    embed.set_thumbnail(url=ctx.author.avatar)
+    sentfrom = f"Sent from #{ctx.channel.name}"
+
+    if anonym:
+        random_city = "Void"
+        random_name = "Jan Jelen"
+        try:
+            apiCall = requests.get("https://random-city-api.vercel.app/api/random-city")
+            if apiCall.status_code == 200:
+                await random_city=(apiCall.json()["city"])
+
+        try:
+            apiCall = requests.get("https://randomuser.me//api")
+            if apiCall.status_code == 200:
+                await random_name=(apiCall.json()["login"]["username"]) 
+
+        embed = disnake.Embed(
+            title=f"{random_name} tweeted:",
+            description=f"{content}",
+            color=disnake.Colour.dark_purple()
+        )
+        embed.set_thumbnail(url="https://thispersondoesnotexist.com/")
+        sentfrom = f"Sent from {random_city} ( {ctx.channel.name} )"
+        
+    else:
+        embed = disnake.Embed(
+            title=f"{ctx.author.display_name} tweeted:",
+            description=f"{content}",
+            color=disnake.Colour.dark_purple()
+        )
+        embed.set_thumbnail(url=ctx.author.avatar)
+    
     if media != "null":
         embed.set_image(url=media)
-    embed.add_field(name=f"_", value=f"Sent from #{ctx.channel.name}", inline=True)
-    # if ctx.author.mobile_status:
-    #    embed.add_field(name=f"Sent from a mobile device 📱", value="_", inline=True)
+    embed.add_field(name=f"_", value=sentfrom, inline=True)
     await ctx.response.send_message(content="Tweet posted! 👍", ephemeral=True)
     m = await twitterpero.send(embed=embed)
     await batch_react(m, ["💜", "🔁", "⬇️", "💭", "🔗"])
