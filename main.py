@@ -125,13 +125,7 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
     if anonym:
         random_city = "Void"
         random_name = "Jan Jelen"
-        try:
-            apiCall = requests.get("https://random-city-api.vercel.app/api/random-city")
-            if apiCall.status_code == 200:
-                random_city=(apiCall.json()["city"])
-        except:
-            pass
-        
+
         try:
             apiCall = requests.get("https://randomuser.me//api")
             if apiCall.status_code == 200:
@@ -143,6 +137,7 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
                 randomizer_opt[4] = ("lil" + apiCall.json()["results"][0]["location"]["country"].lower() + "coomer69")
                 
                 random_name = f"@{randomizer_opt[random.randint(0, len(randomizer_opt) - 1)]}"
+                random_city = (apiCall.json()["results"][0]["location"]["city"])
         except:
             pass
 
@@ -152,7 +147,7 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
             color=disnake.Colour.dark_purple()
         )
         embed.set_thumbnail(url=apiCall.json()["results"][0]["picture"]["medium"])
-        sentfrom = f"Sent from {random_city} ( {ctx.channel.name} )"
+        sentfrom = f"Sent from {random_city} (#{ctx.channel.name})"
     else:
         embed = disnake.Embed(
             title=f"{ctx.author.display_name} tweeted:",
