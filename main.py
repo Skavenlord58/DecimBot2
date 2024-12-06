@@ -134,7 +134,14 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
         try:
             apiCall = requests.get("https://randomuser.me//api")
             if apiCall.status_code == 200:
-                random_name=(apiCall.json()["login"]["username"]) 
+                randomizer_opt = []
+                randomizer_opt[0] = (apiCall.json()["results"][0]["login"]["username"])
+                randomizer_opt[1] = (apiCall.json()["results"][0]["email"].split("@")[0])
+                randomizer_opt[2] = (apiCall.json()["results"][0]["login"]["password"] + str(apiCall.json()["results"][0]["dob"]["age"]))
+                randomizer_opt[3] = (apiCall.json()["results"][0]["gender"] + "goblin" + str(apiCall.json()["results"][0]["dob"]["age"]))
+                randomizer_opt[4] = ("lil" + apiCall.json()["results"][0]["location"]["country"].lower() + "coomer69")
+                
+                random_name = f"@{randomizer_opt[random.randint(0, len(randomizer_opt) - 1)]}"
         except:
             pass
 
