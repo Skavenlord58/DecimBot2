@@ -128,13 +128,13 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
         try:
             apiCall = requests.get("https://random-city-api.vercel.app/api/random-city")
             if apiCall.status_code == 200:
-                await random_city=(apiCall.json()["city"])
+                random_city=(apiCall.json()["city"])
         except:
             pass
         try:
             apiCall = requests.get("https://randomuser.me//api")
             if apiCall.status_code == 200:
-                await random_name=(apiCall.json()["login"]["username"]) 
+                random_name=(apiCall.json()["login"]["username"]) 
         except:
             pass
 
@@ -145,7 +145,6 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
         )
         embed.set_thumbnail(url="https://thispersondoesnotexist.com/")
         sentfrom = f"Sent from {random_city} ( {ctx.channel.name} )"
-        
     else:
         embed = disnake.Embed(
             title=f"{ctx.author.display_name} tweeted:",
