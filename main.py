@@ -129,11 +129,14 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
             apiCall = requests.get("https://random-city-api.vercel.app/api/random-city")
             if apiCall.status_code == 200:
                 await random_city=(apiCall.json()["city"])
-
+        except:
+            pass
         try:
             apiCall = requests.get("https://randomuser.me//api")
             if apiCall.status_code == 200:
                 await random_name=(apiCall.json()["login"]["username"]) 
+        except:
+            pass
 
         embed = disnake.Embed(
             title=f"{random_name} tweeted:",
@@ -277,10 +280,10 @@ async def command(ctx):
             disnake.ui.Button(label="Golf With Your Friends", style=disnake.ButtonStyle.blurple, custom_id="golfisti"),
             disnake.ui.Button(label="Civilisation V", style=disnake.ButtonStyle.blurple, custom_id="civky"),
             disnake.ui.Button(label="ROCK AND STONE (Deep rock Gal.)", style=disnake.ButtonStyle.blurple, custom_id="rockandstone"),
-            disnake.ui.Button(label="heroes of the storm", style=disnake.ButtonStyle.blurple, custom_id="hots"),
+            disnake.ui.Button(label="Heroes of the Storm", style=disnake.ButtonStyle.blurple, custom_id="hots"),
             disnake.ui.Button(label="GTA V online", style=disnake.ButtonStyle.blurple, custom_id="gtaonline"),
-            disnake.ui.Button(label="warframe", style=disnake.ButtonStyle.blurple, custom_id="warframe"),
-            disnake.ui.Button(label="helldivers II", style=disnake.ButtonStyle.blurple, custom_id="helldivers"),
+            disnake.ui.Button(label="Warframe", style=disnake.ButtonStyle.blurple, custom_id="warframe"),
+            disnake.ui.Button(label="Helldivers II", style=disnake.ButtonStyle.blurple, custom_id="helldivers"),
             disnake.ui.Button(label="Void Crew", style=disnake.ButtonStyle.blurple, custom_id="voidboys"),
             disnake.ui.Button(label="Finálníci (the Finals)", style=disnake.ButtonStyle.blurple, custom_id="thefinals"),
           
