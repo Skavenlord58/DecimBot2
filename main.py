@@ -131,10 +131,11 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
                 random_city=(apiCall.json()["city"])
         except:
             pass
+        
         try:
             apiCall = requests.get("https://randomuser.me//api")
             if apiCall.status_code == 200:
-                randomizer_opt = []
+                randomizer_opt = ["0","1","2","3","4"] # lazy way
                 randomizer_opt[0] = (apiCall.json()["results"][0]["login"]["username"])
                 randomizer_opt[1] = (apiCall.json()["results"][0]["email"].split("@")[0])
                 randomizer_opt[2] = (apiCall.json()["results"][0]["login"]["password"] + str(apiCall.json()["results"][0]["dob"]["age"]))
@@ -150,7 +151,7 @@ async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
             description=f"{content}",
             color=disnake.Colour.dark_purple()
         )
-        embed.set_thumbnail(url="https://thispersondoesnotexist.com/")
+        embed.set_thumbnail(url=apiCall.json()["results"][0]["picture"]["medium"])
         sentfrom = f"Sent from {random_city} ( {ctx.channel.name} )"
     else:
         embed = disnake.Embed(
