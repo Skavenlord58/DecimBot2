@@ -117,7 +117,7 @@ async def roll(ctx, arg_range=None):
 
 
 # "twitter" functionality 
-@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", anonym = "if True, hides the autor", guild_ids=decdi.GIDS)
+@client.slash_command(name = "tweet", description = "Posts a 'tweet' in #twitter-pero channel.", guild_ids=decdi.GIDS)
 async def tweet(ctx, content: str, media: str = "null", anonym: bool = False):
     twitterpero = client.get_channel(decdi.TWITTERPERO)
     sentfrom = f"Sent from #{ctx.channel.name}"
@@ -425,9 +425,11 @@ async def on_message(m: Message):
             await m.add_reaction("🥶")
             await m.add_reaction("💦")
         if "windows" in m.content.lower():
-            await m.add_reaction("😔")
+            if random.randint(0, 4) == 2:
+                await m.add_reaction("😔")
         if "debian" in m.content.lower():
-            await m.add_reaction("💜")
+            if random.randint(0, 4) == 2:
+                await m.add_reaction("💜")
         if "všechno nejlepší" in m.content.lower():
             await m.add_reaction("🥳")
             await m.add_reaction("🎉")
