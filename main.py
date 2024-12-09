@@ -57,6 +57,18 @@ async def batch_react(m, reactions: List):
         await m.add_reaction(reaction)
     pass
 
+# on_member_join - happens when a new member joins guild
+@client.event
+async def on_member_join(member: disnake.Member):
+    welcome_channel = client.get_channel(decdi.WELCOMEPERO)
+    welcome_channel.send(f"""
+                         Vítej, {member.mention}!
+                         Prosím, přesuň se do <#1314388851304955904> a naklikej si role. Nezapomeň na roli Člen, abys viděl i ostatní kanály!
+                         ---
+                         Please, go to the <#1314388851304955904> channel and select your roles. Don't forget the 'Člen'/Member role to see other channels!
+                        """)
+    pass
+
 ## Commands here ->
 # Show all available commands
 @client.command()
