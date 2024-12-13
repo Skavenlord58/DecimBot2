@@ -61,7 +61,7 @@ async def batch_react(m, reactions: List):
 @client.event
 async def on_member_join(member: disnake.Member):
     welcome_channel = client.get_channel(decdi.WELCOMEPERO)
-    welcome_channel.send(f"""
+    await welcome_channel.send(f"""
                          Vítej, {member.mention}!
                          Prosím, přesuň se do <#1314388851304955904> a naklikej si role. Nezapomeň na roli Člen, abys viděl i ostatní kanály!
                          ---
