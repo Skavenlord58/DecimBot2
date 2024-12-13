@@ -340,8 +340,13 @@ async def listener(ctx: disnake.MessageInteraction):
     }
     if ctx.component.custom_id in role_list.keys():
         role.id = role_list[ctx.component.custom_id]
-        await ctx.author.add_roles(role)
-        await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` added!", ephemeral=True)
+        if role not in ctx.author.roles:
+            await ctx.author.add_roles(role)
+            await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` added!", ephemeral=True)
+        else:
+            await ctx.author.remove_roles(role)
+            await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` removed!", ephemeral=True)
+        
     else:
         pass
 
