@@ -303,13 +303,8 @@ async def command(ctx):
           
         ])
 
-class Role:
-  def __init__(self, id: int = 0):
-    self.id = 0
-
 @client.listen("on_button_click")
 async def listener(ctx: disnake.MessageInteraction):
-    role = Role()
     role_list = {
         "Člen": 804431648959627294,
         "warcraft": 871817685439234108,
@@ -339,7 +334,8 @@ async def listener(ctx: disnake.MessageInteraction):
         "thefinals": 1242187454837035228,
     }
     if ctx.component.custom_id in role_list.keys():
-        role.id = role_list[ctx.component.custom_id]
+        role_id = role_list[ctx.component.custom_id]
+        role = ctx.guild.get_role(role_id)
         if role in ctx.author.roles:
             await ctx.author.remove_roles(role)
             await ctx.response.send_message(content=f"Role `{ctx.component.custom_id}` removed!", ephemeral=True)
